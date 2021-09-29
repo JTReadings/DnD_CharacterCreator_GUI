@@ -1,6 +1,6 @@
 import java.sql.*;
 
-public class mainDisplay{
+public class mainDisplay {
 
     static String databaseName="dnd";
     static String url="jdbc:mysql://localhost/"+databaseName;
@@ -9,44 +9,29 @@ public class mainDisplay{
     static PreparedStatement pstmt;
     static Connection con;
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         new mainDisplay();
     }
 
-    mainDisplay()
-    {   
-        if(checkforCharacter() == true)
-        {
+    mainDisplay() {   
+        if(checkforCharacter() == true) {
             new characterDisplay();
         }
-        else
-        {
+        else {
             new createCharacterDisplay();
         } 
     }
-    public static void findJDBCDriver()
-    {
-      try {
-           Class.forName("com.mysql.cj.jdbc.Driver"); 
-           System.out.println("Class Found");
-       } catch(java.lang.ClassNotFoundException e) {
-         System.err.print("ClassNotFoundException: ");
-         System.err.println(e.getMessage());
-       }
-    }
-    public static Connection getJDBCConnection()
-    {     
+
+    public static Connection getJDBCConnection() {     
        try {
          con = DriverManager.getConnection(url,userid, password);
-         System.out.println("Connection established(Saved Characters)");
+         System.out.println("Connection established, Checking For Saved Characters...");
        } catch(SQLException ex) {
          System.err.println("SQLException: " + ex.getMessage());
        }  
        return con; 
     }
-    public static boolean checkforCharacter()
-    {
+    public static boolean checkforCharacter() {
         Connection con = getJDBCConnection();
         String result = null;
         try {
@@ -58,12 +43,10 @@ public class mainDisplay{
         } catch(SQLException ex) {
             System.err.println("SQLException: " +ex.getMessage());
             }
-        if(result == null)
-            {
+        if(result == null) {
                 return false;
             }
-        else
-            {
+        else {
                 return true;
             }
     }

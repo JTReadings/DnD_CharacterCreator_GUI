@@ -18,12 +18,9 @@ public class characterOptions {
     JComboBox selectRace = new JComboBox();
     JComboBox selectClass = new JComboBox();
     JComboBox selectBackground = new JComboBox();
-
-    BufferedImage img;
-
-    JLabel racePic;
+    JComboBox selectScore = new JComboBox();
     
-    public characterOptions(){     
+    public characterOptions() {     
     }
 
     public static Connection getJDBCConnection() {     
@@ -38,47 +35,28 @@ public class characterOptions {
     
     public JComboBox raceSelection(){
         try {
-            System.out.println(selectRace.getSelectedItem());
             rs = con.createStatement().executeQuery("SELECT raceNames from races");
             while (rs.next()) {
                 selectRace.addItem(rs.getString("raceNames"));
-                }
-            rs.close();         
             }
-        catch(SQLException ex) {
+                rs.close();         
+        } catch(SQLException ex) {
             System.err.println("SQLException: " +ex.getMessage());
         }        
-        return selectRace;
-    }
-
-  /*  public JLabel racePics(){
-        System.out.println("\"images/"+ selectRace.getSelectedItem() +".png\"");
         selectRace.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource() == selectRace) {
-                    try {
-                        img = ImageIO.read(new File("images/"+ raceSelection().getSelectedItem() +".png"));
-                        racePic = new JLabel(new ImageIcon(img));
-                    }       
-                catch(IOException ex) {
-                    ex.printStackTrace();
-                } 
-                }  
+                    System.out.println("Yay!"+ selectRace.getSelectedItem());
+            
+                }
             }
         });
-        if(racePic == null){
-            racePic = new JLabel();
-            return racePic;
-        }
-        else {
-            return racePic;
-        }
-    }*/
-    
+        return selectRace;
+    }
 
     public JComboBox classSelection(){
         try {
-            ResultSet rs = con.createStatement().executeQuery("SELECT classNames from classes");
+            rs = con.createStatement().executeQuery("SELECT classNames from classes");
             while (rs.next()) {
                 selectClass.addItem(rs.getString("classNames")); 
                 }
@@ -99,7 +77,7 @@ public class characterOptions {
 
     public JComboBox backgroundSelection(){
         try {
-            ResultSet rs = con.createStatement().executeQuery("SELECT backgroundNames from backgrounds");
+            rs = con.createStatement().executeQuery("SELECT backgroundNames from backgrounds");
             while (rs.next()) {
                 selectBackground.addItem(rs.getString("backgroundNames")); 
                 }
@@ -116,5 +94,16 @@ public class characterOptions {
             }
         });
         return selectBackground;
+    }
+
+    public JComboBox[] statSelect(){
+        JComboBox[] statsArray = new JComboBox[6];
+        for(int j = 0; j <= 5; j++){
+            statsArray[j] = new JComboBox();
+            for(int i = 1; i <= 20; i++) {
+                statsArray[j].addItem(i);
+            }
+        }
+        return statsArray;
     }
 }
